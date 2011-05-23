@@ -1,0 +1,26 @@
+
+
+set style line 11 lt 1 lw 2 lc 17 pt 11 ps 1
+set style line 12 lt 1 lw 2 lc 0 pt 5 ps 1
+
+
+set xlabel 'Numero de concejales'
+set ylabel 'Numero de candidaturas'
+
+
+set term post eps color enh 
+set out 'resultados.eps'
+set key top box
+plot [0:30] 'sal-2011.sal' u 1:2 ls 11 t 'Elecciones 2011', \
+'sal-2007.sal' u 1:2 ls 12 t 'Elecciones 2007'
+
+set xlabel 'Numero de concejales (Escala log)'
+set ylabel 'Numero de candidaturas (Escala log)'
+
+
+set term post eps color enh 
+set out 'resultados-log.eps'
+set key top box
+set log xy
+plot [0.9:] 'sal-2011.sal' u 1:2 ls 11 t 'Elecciones 2011', \
+'sal-2007.sal' u 1:2 ls 12 t 'Elecciones 2007'

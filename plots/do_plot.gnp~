@@ -1,0 +1,7 @@
+
+
+set point 
+
+
+plot 'sal-2011.dat' u (log($1)):(log($2)) t 'Elecciones 2011'
+plot 'sal-2007.dat' u (log($1)):(log($2)) t 'Elecciones 2007'
