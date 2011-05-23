@@ -1,0 +1,29 @@
+
+Estructura:
+
+  - data/raw:  Datos originales. Corta y pega de las tablas de:
+
+    http://resultados2011.mir.es/99MU/DMU12289PR_L1.htm?e=306
+
+    Ooj, puede haber errores en el corta y pega. Un chequeo seria
+    bienvenido!
+
+  - data/*-20(07)(11).dat. Ficheros de salida del script parse.sh a
+    partir de los datos originales.
+
+    El formato es 4 columnas:
+
+    Cadidatura Concejales Votos %votos
+
+  - data/parse.sh: # ./parse.sh raw/madrid madrid produciria los
+    ficheros madrid-2007.dat y madrid-2011.dat a partir de lso datos
+    originales. 
+
+  - src/simple.f90: Pequeño programa. Cuenta cuantas candidaturas hay
+    con 1 concejal, 2 concejales, etc... Necesita de entrada uno de
+    los ficheros .dat de arriba:
+
+    # echo madrid-2007.dat | ./simple.x > datos.txt
+
+  - plots/*: Datos y herraminetas para graficos.
+
