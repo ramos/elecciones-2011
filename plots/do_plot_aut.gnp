@@ -1,0 +1,24 @@
+
+
+set style line 11 lt 1 lw 2 lc 0 pt 6 ps 1
+set style line 12 lt 1 lw 2 lc 1 pt 6 ps 1
+set style line 21 lt 1 lw 2 lc 2 pt 4 ps 1
+set style line 22 lt 1 lw 2 lc 3 pt 4 ps 1
+
+
+set xlabel 'Numero de concejales'
+set ylabel 'Numero de candidaturas'
+
+
+set xlabel 'Candidaturas (de mas a menos votadas) (Escala log)'
+set ylabel 'Numero de Votos (Escala log)'
+
+
+set term post eps color enh 
+set out 'aut.eps'
+set key top box
+set log xy
+plot [0.9:][8:] 'rep-2011.dat' u 4:2 ls 11 t 'Representados (2011)', \
+'norep-2011.dat' u 4:2 ls 12 t 'No Representados (2011)', \
+'rep-2007.dat' u 4:2 ls 21 t 'Representados (2007)', \
+'norep-2007.dat' u 4:2 ls 22 t 'No Representados (2007)'
