@@ -1,16 +1,18 @@
 
 Program oooo
 
+  USE NonNumeric
+
   Character (len=1000) :: fname, cd
-  Integer, Allocatable :: Nesc(:), Ncuenta(:)
-  Character (len=20), Allocatable :: cand(:), Rvot(:)
+  Integer, Allocatable :: Nesc(:), Ncuenta(:), Nvot(:), Ipt(:), Nord(:)
+  Character (len=20), Allocatable :: cand(:)
   Real, Allocatable :: Rper(:)
 
   Integer :: Nmax, Nleo, Kont
 
   Type candidatura
      Character (len=20) :: name
-     Real :: Rvotos
+     Integer :: Nvotos
      Integer :: Nconc
   End type candidatura
 
@@ -32,11 +34,11 @@ Program oooo
   End Do
 10 Continue
   
-  ALLOCATE(cand(kont), Nesc(kont), Rvot(kont), Rper(kont), res(kont))
+  ALLOCATE(cand(kont), Nesc(kont), Nvot(kont), Rper(kont), res(kont))
   Rewind(69)
   Do I = 1, kont
-     Read(69,*, END=100, ERR=200)cand(I), Nesc(I), Rvot(I)
-     Write(*,*)Rvot(I)
+     Read(69,*, END=100, ERR=200)cand(I), Nesc(I), Nvot(I)
+!     Write(*,*)Nvot(I)
 200  Continue
   End Do
 100 Continue
@@ -58,28 +60,28 @@ Program oooo
      End If
 
      res(Ncand)%name   = cand(I)
-!     res(Ncand)%Rvotos = res(Ncand)%Rvotos + Rvot(I)*1000.0
+     res(Ncand)%Nvotos = res(Ncand)%Nvotos + Nvot(I)
      res(Ncand)%Nconc  = res(Ncand)%Nconc + Nesc(I)
   End Do
   
 
-  Write(*,*)Ndist, kont
+  Write(*,*)'#', Ndist, kont
 
   NMax = MaxVal(res(:)%Nconc)
-  Write(*,*)'# Maximo: ', Nmax
+  Write(*,*)'# Maximo: ', Nmax, MaxVal(res(:)%Nvotos)
   
-  ALLOCATE(Ncuenta(Nmax))
-  Ncuenta = 0
-  Do I = 1, Ndist
-     Ncuenta(res(I)%Nconc) = Ncuenta(res(I)%Nconc) + 1
+  Allocate(Ipt(Ndist), Nord(Ndist))
+  Nord(1:Ndist) = res(1:Ndist)%Nvotos
+  CALL Qsort(Nord, Ipt)
+
+  Do I = Ndist, 1, -1
+     Write(*,*)Trim(res(Ipt(I))%name), res(Ipt(I))%nvotos
+     
   End Do
 
-  Do I = 1, Nmax
-     If (Ncuenta(I) .ne. 0) Then
-        Write(*,*)I, Ncuenta(I)
-     End If
-  End Do
-  
+  MM = Sum(res(:)%nvotos, res(:)%nconc < 1)
+  Write(*,*)'# Votos a partidos con menos de 10 concejales: ', MM
+
 
 
   Stop
